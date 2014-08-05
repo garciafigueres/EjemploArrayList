@@ -1,3 +1,9 @@
+/**
+ * @author Luis García Figueres
+ * 
+ * Esta clase contiene la funcionalidad básica de la aplicación.
+ */
+
 package com.garciafigueres;
 
 import java.util.ArrayList;
