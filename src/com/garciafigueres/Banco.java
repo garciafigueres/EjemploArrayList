@@ -31,7 +31,12 @@ public class Banco {
 		System.out.println("2. Ingresar en cuenta");
 		System.out.println("3. Reintegrar de cuenta");
 		System.out.println("4. Consultar saldo de una cuenta");
-		System.out.println("10. Total de cuentas");
+		System.out.println("5. Ver detalles completos de una cuenta");
+		System.out.println("6. Listar todas las cuentas");
+		System.out.println("7. Numero total de cuentas");
+		System.out.println("8. Calcular saldo total de todas las cuentas");
+		System.out.println("9. Eliminar una cuenta");
+		System.out.println("----------------------------------------------");
 		System.out.println("X. Salir");
 
 		opcion = sc.next();
@@ -57,13 +62,26 @@ public class Banco {
 			objEjec.mostrarMenu();
 			break;
 		case "4":
-			objEjec.verSaldo(objEjec.introId());
+			objEjec.consultarSaldo(objEjec.introId());
 			objEjec.mostrarMenu();
 			break;
-		case "10":
+		case "5":
+			objEjec.detallarCuenta(objEjec.introId());
+			objEjec.mostrarMenu();
+			break;
+		case "6":
+			objEjec.listarCuentas();
+			objEjec.mostrarMenu();
+			break;
+		case "7":
 			System.out.println(objEjec.numTotalCuentas());
 			objEjec.mostrarMenu();
 			break;
+		case "9":
+			objEjec.eliminarCuenta(objEjec.introId());
+			objEjec.mostrarMenu();
+			break;
+
 		case "X":
 			System.out.println("Adios.");
 			sc.close();
@@ -81,12 +99,6 @@ public class Banco {
 		Cuenta cnt = new Cuenta(objCrearCuenta.introTitular(),objCrearCuenta.introId(),objCrearCuenta.introImporte());
 		listaCuentas.add(cnt);
 		System.out.println("Cuenta " + cnt.id + " creada correctamente.\n");
-	}
-
-	// Este método devuelve el numero de cuentas que existen actualmente en el banco
-	public String numTotalCuentas() {
-		String totalCuentas = "Actualmente el banco administra " + listaCuentas.size() + " cuentas.\n";
-		return totalCuentas;
 	}
 
 	// Este método permite ingresar un importe dado en una cuenta determinada
@@ -132,7 +144,7 @@ public class Banco {
 	}
 
 	// Este método permite obtener el saldo de una cuenta determinada
-	public void verSaldo(int idCuenta){
+	public void consultarSaldo(int idCuenta){
 		int coincidencias = 0;
 		// Recorremos la lista con el iterador.
 		while(iteradorCuentas.hasNext()){
@@ -149,6 +161,72 @@ public class Banco {
 		if (coincidencias==0) {
 			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
 		}
+	}
+
+	// Este método muestra todos los detalles de una cuenta determinada
+	public void detallarCuenta(int idCuenta){
+		int coincidencias = 0;
+		// Recorremos la lista con el iterador.
+		while (iteradorCuentas.hasNext()){
+			// Creamos un objeto Cuenta que almacena el elemento actual del iterador
+			Cuenta cnt = iteradorCuentas.next();
+			// Cuando coincida la id, realizamos la operación solicitada
+			if(cnt.getId()==idCuenta){
+				coincidencias++;
+				System.out.println(" Numero de cuenta: " + cnt.getId());
+				System.out.println(" Titular: " + cnt.getTitular());
+				System.out.println(" Saldo actual: " + cnt.getSaldo() + "\n");
+			}
+		}
+		
+		if (coincidencias==0) {
+			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
+		}
+	}
+	
+	// Este método lista los detalles de todas las cuentas del Banco
+	public void listarCuentas(){
+		int coincidencias = 0;
+		Banco objListarCuentas = new Banco();
+		// Recorremos la lista con el iterador.
+		while (iteradorCuentas.hasNext()){
+			coincidencias++;
+			// Creamos un objeto Cuenta que almacena el elemento actual del iterador
+			Cuenta cnt = iteradorCuentas.next();
+			// LLamamos al método detallarCuenta para esta cuenta determinada
+			int idCuenta = cnt.getId();
+			objListarCuentas.detallarCuenta(idCuenta);
+		}
+		if (coincidencias==0) {
+			System.out.println("No existen cuentas en este banco.\n");
+		}
+	}
+
+	//Este método elimina una cuenta determinada
+	public void eliminarCuenta(int idCuenta){
+		int coincidencias = 0;
+		// Recorremos la lista con el iterador.
+		while(iteradorCuentas.hasNext()){
+			// Creamos un objeto Cuenta que almacena el elemento actual del iterador
+			Cuenta cnt = iteradorCuentas.next();
+			// Cuando coincida la id, realizamos la operación solicitada.
+			if(cnt.getId()==idCuenta){
+				coincidencias++;
+				listaCuentas.remove(cnt);
+				System.out.println("La cuenta " + idCuenta+ " se ha eliminado correctamente.\n");
+				break;
+			}
+		}
+
+		if (coincidencias==0) {
+			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
+		}
+	}
+
+	// Este método devuelve el numero de cuentas que existen actualmente en el banco
+	public String numTotalCuentas() {
+		String totalCuentas = "Actualmente el banco administra " + listaCuentas.size() + " cuentas.\n";
+		return totalCuentas;
 	}
 
 	// Método para recibir por teclado una id de cuenta
