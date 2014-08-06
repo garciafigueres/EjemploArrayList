@@ -1,7 +1,7 @@
 /**
- * @author Luis García Figueres
+ * @author Luis Garcia Figueres
  * 
- * Esta clase contiene la funcionalidad básica de la aplicación.
+ * Esta clase contiene la funcionalidad basica de la aplicacion.
  */
 
 package com.garciafigueres;
@@ -29,6 +29,8 @@ public class Banco {
 		System.out.println("--------------");
 		System.out.println("1. Crear cuenta");
 		System.out.println("2. Ingresar en cuenta");
+		System.out.println("3. Reintegrar de cuenta");
+		System.out.println("4. Consultar saldo de una cuenta");
 		System.out.println("10. Total de cuentas");
 		System.out.println("X. Salir");
 
@@ -47,14 +49,24 @@ public class Banco {
 			objEjec.mostrarMenu();
 			break;
 		case "2":
-			objEjec.ingresar(objEjec.introId(), 100);
+			objEjec.ingresar(objEjec.introId(), objEjec.introImporte());
 			objEjec.mostrarMenu();
+			break;
+		case "3":
+			objEjec.reintegrar(objEjec.introId(), objEjec.introImporte());
+			objEjec.mostrarMenu();
+			break;
+		case "4":
+			objEjec.verSaldo(objEjec.introId());
+			objEjec.mostrarMenu();
+			break;
 		case "10":
 			System.out.println(objEjec.numTotalCuentas());
 			objEjec.mostrarMenu();
 			break;
 		case "X":
 			System.out.println("Adios.");
+			sc.close();
 			System.exit(0);
 			break;
 		default:
@@ -65,7 +77,8 @@ public class Banco {
 
 	//Este método crea una nueva cuenta y la añade al AL
 	public void crearCuenta(){
-		Cuenta cnt = new Cuenta("Oscar Garcia", 1, 100);
+		Banco objCrearCuenta = new Banco();
+		Cuenta cnt = new Cuenta(objCrearCuenta.introTitular(),objCrearCuenta.introId(),objCrearCuenta.introImporte());
 		listaCuentas.add(cnt);
 		System.out.println("Cuenta " + cnt.id + " creada correctamente.\n");
 	}
@@ -84,37 +97,111 @@ public class Banco {
 			// Cuando coincida la id, realizamos la operación solicitada.
 			if(iteradorCuentas.next().getId()==idCuenta){
 				coincidencias++;
+				float saldoActual = iteradorCuentas.next().getSaldo(); 
+				iteradorCuentas.next().setSaldo(saldoActual+importe);
 				System.out.println("Se han ingresado " + importe + " euros en la cuenta " + idCuenta +".\n");
 			}
 		}
-		
+
+		if (coincidencias==0) {
+			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
+		}
+	}
+
+	// Este método permite reintegrar un importe dado de una cuenta determinada
+	public void reintegrar(int idCuenta, float importe){
+		int coincidencias = 0;
+		// Recorremos la lista con el iterador.
+		while(iteradorCuentas.hasNext()){
+			// Cuando coincida la id, realizamos la operación solicitada.
+			if(iteradorCuentas.next().getId()==idCuenta){
+				coincidencias++;
+				float saldoActual = iteradorCuentas.next().getSaldo(); 
+				iteradorCuentas.next().setSaldo(saldoActual-importe);
+				System.out.println("Se han retirado " + importe + " euros de la cuenta " + idCuenta +".\n");
+			}
+		}
+
 		if (coincidencias==0) {
 			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
 		}
 	}
 	
+	// Este método permite obtener el saldo de una cuenta determinada
+	public void verSaldo(int idCuenta){
+		int coincidencias = 0;
+		// Recorremos la lista con el iterador.
+		while(iteradorCuentas.hasNext()){
+			// Cuando coincida la id, realizamos la operación solicitada.
+			if(iteradorCuentas.next().getId()==idCuenta){
+				coincidencias++;
+				float saldoActual = iteradorCuentas.next().getSaldo(); 
+				System.out.println("Actualmente, la cuenta " + idCuenta +" tiene un saldo de " + saldoActual + "euros.\n");
+			}
+		}
+
+		if (coincidencias==0) {
+			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
+		}
+	}
+
 	// Método para recibir por teclado una id de cuenta
 	public int introId(){
 		Banco objIntroId = new Banco();
 		String id=null;
-		
+
 		while (!objIntroId.esEntero(id)){
 			System.out.print("Introduzca id de cuenta: ");
 			id = sc.next();
 			if (!objIntroId.esEntero(id)){
-				System.out.println(id + " no es entero. Pruebe de nuevo.\n");
+				System.out.println(id + " no es un valor valido. Pruebe de nuevo.\n");
 			}
 		}
 		return Integer.parseInt(id);
 	}
-	
+
+	// Método para recibir por teclado un titular de cuenta
+	public String introTitular(){
+		String titular="";
+
+		while (titular==""){
+			System.out.print("Introduzca nombre del titular: ");
+			titular = sc.next();
+		}
+		return titular;
+	}
+
+	// Método para recibir por teclado un importe
+	public float introImporte(){
+		Banco objIntroImporte = new Banco();
+		String importe=null;
+
+		while (!objIntroImporte.esFlotante(importe)){
+			System.out.print("Introduzca importe: ");
+			importe = sc.next();
+			if (!objIntroImporte.esFlotante(importe)){
+				System.out.println(importe + " no es un valor valido. Pruebe de nuevo.\n");
+			}
+		}
+		return Float.parseFloat(importe);
+	}
+
 	// Método para comprobar que una determinada cadena es un entero
 	public boolean esEntero(String cadena){
 		try{
 			Integer.parseInt(cadena);
 			return true;
 		}catch (Exception e){
-			//System.out.print(" " + cadena + " no es entero.");
+			return false;
+		}
+	}
+
+	// Método para comprobar que una determinada cadena es un flotante
+	public boolean esFlotante(String cadena){
+		try{
+			Float.parseFloat(cadena);
+			return true;
+		}catch (Exception e){
 			return false;
 		}
 	}

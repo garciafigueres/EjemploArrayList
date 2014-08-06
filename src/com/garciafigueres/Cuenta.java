@@ -1,7 +1,7 @@
 /**
- * @author Luis García Figueres
+ * @author Luis Garcia Figueres
  * 
- * Esta clase contiene todos los atributos y métodos para los objetos tipo Cuenta
+ * Esta clase contiene todos los atributos y metodos para los objetos tipo Cuenta
  * 
  * Una cuenta debe contener asociados un titular, una id y un saldo.
  */
