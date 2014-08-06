@@ -94,11 +94,13 @@ public class Banco {
 		int coincidencias = 0;
 		// Recorremos la lista con el iterador.
 		while(iteradorCuentas.hasNext()){
+			// Creamos un objeto Cuenta que almacena el elemento actual del iterador
+			Cuenta cnt = iteradorCuentas.next();
 			// Cuando coincida la id, realizamos la operación solicitada.
-			if(iteradorCuentas.next().getId()==idCuenta){
+			if(cnt.getId()==idCuenta){
 				coincidencias++;
-				float saldoActual = iteradorCuentas.next().getSaldo(); 
-				iteradorCuentas.next().setSaldo(saldoActual+importe);
+				float saldoActual = cnt.getSaldo();
+				cnt.setSaldo(saldoActual+importe);
 				System.out.println("Se han ingresado " + importe + " euros en la cuenta " + idCuenta +".\n");
 			}
 		}
@@ -113,11 +115,13 @@ public class Banco {
 		int coincidencias = 0;
 		// Recorremos la lista con el iterador.
 		while(iteradorCuentas.hasNext()){
+			// Creamos un objeto Cuenta que almacena el elemento actual del iterador
+			Cuenta cnt = iteradorCuentas.next();
 			// Cuando coincida la id, realizamos la operación solicitada.
-			if(iteradorCuentas.next().getId()==idCuenta){
+			if(cnt.getId()==idCuenta){
 				coincidencias++;
-				float saldoActual = iteradorCuentas.next().getSaldo(); 
-				iteradorCuentas.next().setSaldo(saldoActual-importe);
+				float saldoActual = cnt.getSaldo();
+				cnt.setSaldo(saldoActual-importe);
 				System.out.println("Se han retirado " + importe + " euros de la cuenta " + idCuenta +".\n");
 			}
 		}
@@ -126,17 +130,19 @@ public class Banco {
 			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
 		}
 	}
-	
+
 	// Este método permite obtener el saldo de una cuenta determinada
 	public void verSaldo(int idCuenta){
 		int coincidencias = 0;
 		// Recorremos la lista con el iterador.
 		while(iteradorCuentas.hasNext()){
+			// Creamos un objeto Cuenta que almacena el elemento actual del iterador
+			Cuenta cnt = iteradorCuentas.next();
 			// Cuando coincida la id, realizamos la operación solicitada.
-			if(iteradorCuentas.next().getId()==idCuenta){
+			if(cnt.getId()==idCuenta){
 				coincidencias++;
-				float saldoActual = iteradorCuentas.next().getSaldo(); 
-				System.out.println("Actualmente, la cuenta " + idCuenta +" tiene un saldo de " + saldoActual + "euros.\n");
+				float saldoActual = cnt.getSaldo();
+				System.out.println("Actualmente, la cuenta " + idCuenta +" tiene un saldo de " + saldoActual + " euros.\n");
 			}
 		}
 
