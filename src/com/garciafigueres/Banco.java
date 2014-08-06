@@ -38,6 +38,7 @@ public class Banco {
 		System.out.println("9. Eliminar una cuenta");
 		System.out.println("----------------------------------------------");
 		System.out.println("X. Salir");
+		System.out.print("\n -> ");
 
 		opcion = sc.next();
 
@@ -178,24 +179,25 @@ public class Banco {
 				System.out.println(" Saldo actual: " + cnt.getSaldo() + "\n");
 			}
 		}
-		
+
 		if (coincidencias==0) {
 			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
 		}
 	}
-	
+
 	// Este método lista los detalles de todas las cuentas del Banco
 	public void listarCuentas(){
 		int coincidencias = 0;
-		Banco objListarCuentas = new Banco();
 		// Recorremos la lista con el iterador.
 		while (iteradorCuentas.hasNext()){
 			coincidencias++;
 			// Creamos un objeto Cuenta que almacena el elemento actual del iterador
 			Cuenta cnt = iteradorCuentas.next();
 			// LLamamos al método detallarCuenta para esta cuenta determinada
-			int idCuenta = cnt.getId();
-			objListarCuentas.detallarCuenta(idCuenta);
+			System.out.println(" Numero de cuenta: " + cnt.getId());
+			System.out.println(" Titular: " + cnt.getTitular());
+			System.out.println(" Saldo actual: " + cnt.getSaldo() + "\n");
+
 		}
 		if (coincidencias==0) {
 			System.out.println("No existen cuentas en este banco.\n");
