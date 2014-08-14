@@ -3,7 +3,8 @@
  * 
  * Esta clase contiene todos los atributos y metodos para los objetos tipo Cuenta
  * 
- * Una cuenta debe contener asociados un titular, una id y un saldo.
+ * Una cuenta debe contener asociados un titular, una id y un saldo,
+ * además de los getters y setters correspondientes. 
  */
 package com.garciafigueres;
 

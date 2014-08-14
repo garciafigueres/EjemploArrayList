@@ -16,14 +16,16 @@ public class Banco {
 	public Iterator<Cuenta> iteradorCuentas = listaCuentas.iterator();
 	public Scanner sc = new Scanner(System.in);
 
+	// En el método main únicamente llamo a la función mostrarMenú
 	public static void main(String[] args) {
 		Banco objMain = new Banco();
 		objMain.mostrarMenu();
 	}
 
+	// Esta función muestra en pantalla todas las opciones disponibles
 	public void mostrarMenu(){
 		Banco objMenu = new Banco();
-		String opcion;
+		String opcion;	// En esta variable guardo la opción que introducirá el usuario
 
 		System.out.println("MENU PRINCIPAL");
 		System.out.println("--------------");
@@ -42,12 +44,14 @@ public class Banco {
 
 		opcion = sc.next();
 
+		// Llamo al método ejecutarAccion para que ejecute la opción elegida
 		objMenu.ejecutarAccion(opcion);
 	}
 
+	// Dependiendo de la opción elegida por el usuario se llevará a cabo una acción u otra
 	public void ejecutarAccion(String accion){
 		Banco objEjec = new Banco();
-		accion = accion.toUpperCase();
+		accion = accion.toUpperCase();	// Me aseguro de convertir las cadenas a mayúsculas
 
 		switch (accion) {
 		case "1":
@@ -88,11 +92,13 @@ public class Banco {
 			break;
 
 		case "X":
+			// Antes de salir cierro el objeto de tipo Scanner sc
 			System.out.println("Adios.");
 			sc.close();
 			System.exit(0);
 			break;
 		default:
+			// Si el usuario introduce una opción no contemplada muestro un mensaje de error
 			System.out.println("Error: opcion no reconocida.\n");
 			objEjec.mostrarMenu();
 		}
@@ -122,6 +128,7 @@ public class Banco {
 			}
 		}
 
+		// Si no se encuentra la cuenta especificada muestro un mensaje
 		if (coincidencias==0) {
 			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
 		}
@@ -143,6 +150,7 @@ public class Banco {
 			}
 		}
 
+		// Si no se encuentra la cuenta especificada muestro un mensaje
 		if (coincidencias==0) {
 			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
 		}
@@ -163,6 +171,7 @@ public class Banco {
 			}
 		}
 
+		// Si no se encuentra la cuenta especificada muestro un mensaje
 		if (coincidencias==0) {
 			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
 		}
@@ -184,6 +193,7 @@ public class Banco {
 			}
 		}
 
+		// Si no se encuentra la cuenta especificada muestro un mensaje
 		if (coincidencias==0) {
 			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
 		}
@@ -202,6 +212,8 @@ public class Banco {
 			System.out.println(" Titular: " + cnt.getTitular());
 			System.out.println(" Saldo actual: " + cnt.getSaldo() + "\n");
 		}
+		
+		// Si no se encuentran cuentas muestro un mensaje
 		if (coincidencias==0) {
 			System.out.println("No existen cuentas en este banco.\n");
 		}
@@ -221,6 +233,7 @@ public class Banco {
 			saldoTotal += saldoCuenta;
 		}
 		
+		// Si no se encuentran cuentas muestro un mensaje
 		if (coincidencias==0) {
 			return "No existen cuentas en este banco.\n";
 		}else{
@@ -244,6 +257,7 @@ public class Banco {
 			}
 		}
 
+		// Si no se encuentra la cuenta especificada muestro un mensaje
 		if (coincidencias==0) {
 			System.out.println("No existe ninguna cuenta con la clave " + idCuenta +".\n");
 		}
@@ -260,6 +274,7 @@ public class Banco {
 		Banco objIntroId = new Banco();
 		String id=null;
 
+		// Fuerzo a que el usuario introduzca un entero
 		while (!objIntroId.esEntero(id)){
 			System.out.print("Introduzca id de cuenta: ");
 			id = sc.next();
@@ -274,6 +289,7 @@ public class Banco {
 	public String introTitular(){
 		String titular="";
 
+		// Fuerzo a que el usuario introduzca una cadena no vacía
 		while (titular==""){
 			System.out.print("Introduzca nombre del titular: ");
 			titular = sc.next();
@@ -286,6 +302,7 @@ public class Banco {
 		Banco objIntroImporte = new Banco();
 		String importe=null;
 
+		// Fuerzo a que el usuario introduzca un float
 		while (!objIntroImporte.esFlotante(importe)){
 			System.out.print("Introduzca importe: ");
 			importe = sc.next();
