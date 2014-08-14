@@ -78,6 +78,10 @@ public class Banco {
 			System.out.println(objEjec.numTotalCuentas());
 			objEjec.mostrarMenu();
 			break;
+		case "8":
+			System.out.println(objEjec.saldoTotal());;
+			objEjec.mostrarMenu();
+			break;
 		case "9":
 			objEjec.eliminarCuenta(objEjec.introId());
 			objEjec.mostrarMenu();
@@ -193,14 +197,34 @@ public class Banco {
 			coincidencias++;
 			// Creamos un objeto Cuenta que almacena el elemento actual del iterador
 			Cuenta cnt = iteradorCuentas.next();
-			// LLamamos al método detallarCuenta para esta cuenta determinada
+			// Mostramos por pantalla los detalles de la cuenta actual
 			System.out.println(" Numero de cuenta: " + cnt.getId());
 			System.out.println(" Titular: " + cnt.getTitular());
 			System.out.println(" Saldo actual: " + cnt.getSaldo() + "\n");
-
 		}
 		if (coincidencias==0) {
 			System.out.println("No existen cuentas en este banco.\n");
+		}
+	}
+
+	// Este método calcula el salto total de todas las cuentas que administra el banco
+	public String saldoTotal(){
+		int coincidencias = 0;
+		float saldoTotal = 0;
+		// Recorremos la lista con el iterador.
+		while (iteradorCuentas.hasNext()){
+			coincidencias++;
+			// Creamos un objeto Cuenta que almacena el elemento actual del iterador
+			Cuenta cnt = iteradorCuentas.next();
+			// Cuando coincida la id, realizamos la operación solicitada.
+			float saldoCuenta = cnt.getSaldo();
+			saldoTotal += saldoCuenta;
+		}
+		
+		if (coincidencias==0) {
+			return "No existen cuentas en este banco.\n";
+		}else{
+			return "Este banco administra un total de " + coincidencias + " cuentas con un saldo total de " + saldoTotal + " euros.\n";
 		}
 	}
 
